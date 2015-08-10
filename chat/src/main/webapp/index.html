@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Websocket Chat</title>
+
+<meta charset="utf-8">
+
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<!-- twitter bootstrap -->
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet"
+	href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css">
+<link rel="stylesheet"
+	href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+</head>
+<body>
+
+	<script
+		src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js">
+		
+	</script>
+
+	<script type="text/javascript">
+		var loc = window.location;
+		var wsUri = "ws://" + loc.host + "/chat-1.0/chat";
+		var output;
+		var tick;
+
+		if (typeof (EventSource) !== "undefined") {
+			var source = new EventSource("channel");
+			source.onmessage = function(event) {
+				$("#tick").text(event.data);
+			};
+			source.onerror = function(e) {
+				alert("EventSource failed.");
+			};
+		} else {
+			$("#tick")
+					.text(
+							"Sorry, your browser does not support server-sent events...");
+		}
+
+		function initWebSocket() {
+			websocket = new WebSocket(wsUri);
+			websocket.onopen = function(evt) {
+				onOpen(evt)
+			};
+			websocket.onclose = function(evt) {
+				onClose(evt)
+			};
+			websocket.onmessage = function(evt) {
+				onMessage(evt)
+			};
+			websocket.onerror = function(evt) {
+				onError(evt)
+			};
+		}
+
+		function onOpen(evt) {
+			writeToScreen("CONNECTED");
+			doSend("WebSocket rocks");
+		}
+
+		function onClose(evt) {
+			writeToScreen("DISCONNECTED");
+		}
+
+		function onMessage(evt) {
+			writeToChat(evt.data);
+		}
+
+		function onError(evt) {
+			writeToChat('ERROR: ' + evt.data);
+		}
+
+		function doSend() {
+			writeToChat("SENT: " + $("#inputId").val());
+
+			websocket.send($("#inputId").val());
+			$('#inputId').val('');
+		}
+
+		function sendChanging() {
+			websocket.send('');
+		}
+
+		function writeToScreen(message) {
+			$('#output').text(message);
+		}
+
+		function writeToChat(message) {
+			$("#areaId").append("\n");
+			$("#areaId").append(message);
+		}
+		window.addEventListener("load", initWebSocket, false);
+	</script>
+
+
+	<h2>WebSocket Base Chat</h2>
+
+	<div id="output"></div>
+	<div class="container-fluid">
+		The following users are typing now:
+		<div id="tick"></div>
+		<div class="row">
+			<div class="col-sm-12">
+				<div>
+					<textarea rows="15" cols="50" id="areaId"></textarea>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<div>
+					<textarea rows="2" cols="50" id="inputId"
+						onkeydown="sendChanging();"></textarea>
+
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12">
+				<div>
+					<button onclick="doSend()">Send</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
