@@ -1,1 +1,1 @@
-include 'chat'
+include 'chat', 'jaxb-batch', 'wildfly-people'

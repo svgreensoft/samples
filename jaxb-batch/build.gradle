@@ -1,0 +1,62 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+sourceCompatibility = 1.8
+
+configurations {
+    generate
+}
+
+def generatedSrcDir = file("src/generated-sources")
+def schemaBaseDir = 'src/main/resources/schema/'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    
+    generate 'com.sun.xml.bind:jaxb-core:2.2.11'
+    generate 'com.sun.xml.bind:jaxb-impl:2.2.11'
+    generate 'com.sun.xml.bind:jaxb-xjc:2.2.11'
+    // this version due the issue - https://github.com/jacobono/gradle-jaxb-plugin/issues/15
+    generate 'javax.xml.bind:jaxb-api:2.2.12'
+    
+    generate 'org.jvnet.jaxb2_commons:jaxb2-basics-ant:0.9.4'
+    generate 'org.jvnet.jaxb2_commons:jaxb2-basics-annotate:1.0.1'
+}
+
+task generate  {
+
+    generatedSrcDir.deleteDir()
+    generatedSrcDir.mkdirs()
+
+    ant.taskdef(name: 'xjc', classname: 'org.jvnet.jaxb2_commons.xjc.XJC2Task',
+        classpath: configurations.generate.asPath)
+
+    ant.xjc(destdir: generatedSrcDir, 
+        extension: true, classpath: configurations.generate.asPath) {
+        arg(line: '-Xannotate')
+        binding(dir: schemaBaseDir + 'earth', includes: '*.xjb')
+        schema(dir: schemaBaseDir + 'earth', includes: '*.xsd')
+    }
+    
+    ant.xjc(destdir: generatedSrcDir, 
+        extension: true, classpath: configurations.generate.asPath) {
+        arg(line: '-Xannotate')
+        binding(dir: schemaBaseDir + 'jupiter', includes: '*.xjb')
+        schema(dir: schemaBaseDir + 'jupiter', includes: '*.xsd')
+    }
+    
+    ant.xjc(destdir: generatedSrcDir, 
+        extension: true, classpath: configurations.generate.asPath) {
+        arg(line: '-Xannotate')
+        binding(dir: schemaBaseDir + 'pluto', includes: '*.xjb')
+        schema(dir: schemaBaseDir + 'pluto', includes: '*.xsd')
+    }
+    
+}
+
+sourceSets.main.java.srcDirs += generatedSrcDir
+compileJava.dependsOn generate
+

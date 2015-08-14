@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Wildfly People Application</title>
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script>
+$(document).ready(function(){
+
+    $("#birthday").datepicker({
+        dateFormat: "yy-mm-dd"
+    });
+    
+    $("button").click(function(){
+        $.ajax({
+            url:'rest/json',
+	        data:JSON.stringify({
+	          firstName: $("#firstname").val(),
+	          middleName: $("#middlename").val(),
+	          lastName: $("#lastname").val(),
+	          birthday: $("#birthday").datepicker("getDate")
+	        }),
+	        type:'POST',
+	        success: function(data,status){
+	            alert("Data: " + data + "\nStatus: " + status);
+	        },
+	        contentType:'application/json'
+         });
+    });
+
+});
+</script>
+
+</head>
+<body>
+	<p>Enter the person's data:
+	<form id="form" action="submit">
+	<table>
+	   <tr>
+	       <td>First Name</td>
+	       <td><input id="firstname"></td>
+	   </tr>
+	   <tr>
+           <td>Middle Name</td>
+           <td><input id="middlename"></td>
+       </tr>
+	   <tr>
+           <td>Last Name</td>
+           <td><input id="lastname"></td>
+       </tr>
+       <tr>
+           <td>Birthday:</td>
+           <td><input id="birthday" type="text"></td>
+       </tr>
+	   <tr>
+           <td></td>
+           <td><button id="button" type="button">Save</button></td>
+       </tr>
+	   
+	</table>
+	</form>
+</body>
+</html>
