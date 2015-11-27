@@ -1,0 +1,2 @@
+ext.springVersion = '4.2.3.RELEASE'
+ext.tomcatVersion = '7.0.59'
