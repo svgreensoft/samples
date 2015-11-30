@@ -17,15 +17,12 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @Configuration
 @EnableSwagger2
-@ComponentScan(basePackages = { "com.wiley.funderservice.ws.controllers" })
+@ComponentScan(basePackages = { "org.sversh.ssui" })
 public class SwaggerConfig {
     
     @Bean
     public Docket restfulApi() {
         return new Docket(DocumentationType.SWAGGER_2)
-                //.groupName("restful-api")
-                //.select()
-                //.build()
                 .apiInfo(apiInfo());
     }
 
