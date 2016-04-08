@@ -13,10 +13,7 @@ import org.springframework.orm.hibernate4.HibernateExceptionTranslator;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.transaction.annotation.TransactionManagementConfigurer;
-import org.springframework.transaction.support.TransactionTemplate;
 
 /**
  * 
@@ -27,8 +24,8 @@ import org.springframework.transaction.support.TransactionTemplate;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories
-@ComponentScan("org.sversh.hw.data")
-public class RootContextConfig implements TransactionManagementConfigurer {
+@ComponentScan("org.sversh.hw")
+public class RootContextConfig /*implements TransactionManagementConfigurer*/ {
 
     private static final String DRIVER_CLASS_NAME = "org.hsqldb.jdbc.JDBCDriver";
     private static final String DB_URL = "jdbc:hsqldb:mem:homework";
@@ -67,21 +64,14 @@ public class RootContextConfig implements TransactionManagementConfigurer {
 }
 
 
-    @Override
+    //@Override
+    @Bean
     public JpaTransactionManager annotationDrivenTransactionManager() {
         JpaTransactionManager txManager = new JpaTransactionManager();
         txManager.setEntityManagerFactory(this.configureEntityManagerFactory().getObject());
-        //txManager.setDataSource(getDataSource());
         return txManager ;
     }
     
-//    @Bean
-//    public PlatformTransactionManager annotationDrivenTransactionManager(){
-//       JpaTransactionManager transactionManager = new JpaTransactionManager();
-//       transactionManager.setEntityManagerFactory(
-//               configureEntityManagerFactory().getObject() );
-//       return transactionManager;
-//    }
     
 //    @Bean
 //    public DriverManagerDataSource getDataSourceTemplate() {
