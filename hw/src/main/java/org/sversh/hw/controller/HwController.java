@@ -3,7 +3,6 @@ package org.sversh.hw.controller;
 import java.io.IOException;
 import java.util.Date;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -34,7 +33,7 @@ public class HwController {
     private IpFinder ipFinder;
     
     @RequestMapping(method = RequestMethod.GET, value = "/firstname/{firstname}/lastname/{lastname}/amount/{amount}/term/{term}",
-            produces = {"application/xml"})
+            produces = {"application/json"})
     @ResponseBody
     public String getLoan(HttpServletRequest request, HttpServletResponse resp,
                                  @PathVariable String firstname,
@@ -45,8 +44,7 @@ public class HwController {
         LoanRequest loanRequest = LoanRequest
                 .create(new Date(), ip, firstname, lastname, amount, term);
         String response = loanService.process(loanRequest);
-        return "Hello World!";
+        return response;
     }
-
 
 }

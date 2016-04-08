@@ -1,5 +1,7 @@
 package org.sversh.hw.service.impl;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.sversh.hw.data.model.LoanRequest;
@@ -31,11 +33,19 @@ public class LoanServiceImpl implements LoanService {
         boolean isLoanAllowed = riskManagementService.isAllowed(loanRequest);
         String response;
         if (isLoanAllowed) {
+            issueLoan(loanRequest);
             response = responseService.allow(loanRequest);
         } else {
             response = responseService.reject(loanRequest);
         }
         return response;
+    }
+
+    private void issueLoan(LoanRequest lr) {
+        UUID token = UUID.nameUUIDFromBytes((lr.getFirstName() + lr.getLastName()
+                + lr.getIp() + lr.getAmount().longValue() + lr.getDate()).getBytes());
+        lr.setToken(token);
+        entityService.update(lr);
     }
 
 }

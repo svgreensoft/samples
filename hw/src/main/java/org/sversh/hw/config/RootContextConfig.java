@@ -58,6 +58,8 @@ public class RootContextConfig /*implements TransactionManagementConfigurer*/ {
         Properties properties = new Properties();
         properties.put("hibernate.dialect", "org.hibernate.dialect.HSQLDialect");
         properties.put("hibernate.show_sql", "true");
+        // "hibernate.hbm2ddl.auto"
+        properties.put("hibernate.hbm2ddl.auto", "create");
         properties.put("hibernate.cache.region.factory_class", "org.hibernate.cache.ehcache.EhCacheRegionFactory");
         properties.put("hibernate.cache.use_second_level_cache", "false");
         return properties;        

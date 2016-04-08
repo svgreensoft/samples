@@ -1,7 +1,5 @@
 package org.sversh.hw.service.api;
 
-import java.util.List;
-
 import org.sversh.hw.data.model.LoanRequest;
 
 /**
@@ -14,6 +12,8 @@ public interface EntityService {
 
     void save(LoanRequest loanRequest);
 
-    int countAllLoansForPersonAndIpForDay(LoanRequest loanRequest);
+    long countAllLoansForPersonAndIpForDay(LoanRequest loanRequest);
+
+    void update(LoanRequest lr);
 
 }

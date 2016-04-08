@@ -31,7 +31,7 @@ public class RiskManagementServiceImpl implements RiskManagementService {
     }
 
     private boolean isMaxCountForSingleIp(LoanRequest loanRequest) {
-        int count = entityService.countAllLoansForPersonAndIpForDay(loanRequest);
+        long count = entityService.countAllLoansForPersonAndIpForDay(loanRequest);
         return count > MAX_COUNT;
     }
 

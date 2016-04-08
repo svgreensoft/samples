@@ -31,9 +31,15 @@ public class EntityServiceImpl implements EntityService {
 
     @Override
     @Transactional
-    public int countAllLoansForPersonAndIpForDay(LoanRequest lr) {
+    public long countAllLoansForPersonAndIpForDay(LoanRequest lr) {
         return dao.findAllLoansForPersonAndIp(lr.getFirstName(), lr.getLastName(),
                 lr.getIp(), new Date(lr.getDate().getTime() - DAY));
+    }
+
+    @Override
+    @Transactional
+    public void update(LoanRequest loanRequest) {
+        dao.update(loanRequest);
     }
 
 }

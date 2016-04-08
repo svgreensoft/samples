@@ -1,7 +1,7 @@
 package org.sversh.hw.data.model;
 
-import java.math.BigInteger;
 import java.util.Date;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +13,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.Type;
 
 /**
  * 
@@ -37,6 +39,7 @@ public class LoanRequest {
     private String lastName;
     private Long amount;
     private Long term;
+    private UUID token;
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -114,6 +117,16 @@ public class LoanRequest {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public void setToken(UUID token) {
+        this.token = token;
+    }
+
+    @Column(name = "token", nullable = true)
+    //@Type(type = org.hibernate.type.Type)
+    public UUID getToken() {
+        return token;
     }
 
 }

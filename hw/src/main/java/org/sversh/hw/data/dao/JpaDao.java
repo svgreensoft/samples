@@ -34,13 +34,18 @@ public class JpaDao {
     }
 
     @Transactional(propagation = Propagation.MANDATORY)
-    public int findAllLoansForPersonAndIp(String firstName, String lastName, String ip, Date date) {
-        return (int) getEntityManager().createNamedQuery("findAllLoansForPersonAndIp")
+    public long findAllLoansForPersonAndIp(String firstName, String lastName, String ip, Date date) {
+        return (long) getEntityManager().createNamedQuery("findAllLoansForPersonAndIp")
                 .setParameter("firstName", firstName)
                 .setParameter("lastName", lastName)
                 .setParameter("ip", ip)
                 .setParameter("date", date)
                 .getSingleResult();
+    }
+
+    @Transactional(propagation = Propagation.MANDATORY)
+    public void update(LoanRequest entity) {
+        entityManager.merge(entity);
     }
 
 
