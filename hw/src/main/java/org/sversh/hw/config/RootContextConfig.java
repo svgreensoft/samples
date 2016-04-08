@@ -25,7 +25,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @EnableJpaRepositories
 @ComponentScan("org.sversh.hw")
-public class RootContextConfig /*implements TransactionManagementConfigurer*/ {
+public class RootContextConfig {
 
     private static final String DRIVER_CLASS_NAME = "org.hsqldb.jdbc.JDBCDriver";
     private static final String DB_URL = "jdbc:hsqldb:mem:homework";
@@ -58,37 +58,18 @@ public class RootContextConfig /*implements TransactionManagementConfigurer*/ {
         Properties properties = new Properties();
         properties.put("hibernate.dialect", "org.hibernate.dialect.HSQLDialect");
         properties.put("hibernate.show_sql", "true");
-        // "hibernate.hbm2ddl.auto"
         properties.put("hibernate.hbm2ddl.auto", "create");
         properties.put("hibernate.cache.region.factory_class", "org.hibernate.cache.ehcache.EhCacheRegionFactory");
         properties.put("hibernate.cache.use_second_level_cache", "false");
         return properties;        
 }
 
-
-    //@Override
     @Bean
     public JpaTransactionManager annotationDrivenTransactionManager() {
         JpaTransactionManager txManager = new JpaTransactionManager();
         txManager.setEntityManagerFactory(this.configureEntityManagerFactory().getObject());
         return txManager ;
     }
-    
-    
-//    @Bean
-//    public DriverManagerDataSource getDataSourceTemplate() {
-//        DriverManagerDataSource dataSourceTemplate = new DriverManagerDataSource(DB_URL, DB_USER, DB_PSWD);
-//        dataSourceTemplate.setDriverClassName(DRIVER_CLASS_NAME);
-//        return dataSourceTemplate;
-//    }
-    
-    
-//    @Bean
-//    public TransactionTemplate transactionTemplate() {
-//        TransactionTemplate transactionTemplate = new TransactionTemplate();
-//        transactionTemplate.setTransactionManager(annotationDrivenTransactionManager());
-//        return transactionTemplate;
-//    }    
 
     @Bean
     public HibernateExceptionTranslator hibernateExceptionTranslator() {

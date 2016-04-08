@@ -14,8 +14,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.Type;
-
 /**
  * 
  * @author Sergey Vershinin
@@ -124,7 +122,6 @@ public class LoanRequest {
     }
 
     @Column(name = "token", nullable = true)
-    //@Type(type = org.hibernate.type.Type)
     public UUID getToken() {
         return token;
     }
