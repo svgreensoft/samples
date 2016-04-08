@@ -9,8 +9,8 @@ import org.springframework.context.annotation.Import;
  * @since Apr 8, 2016
  *
  */
-@Configuration
-@Import({PersistenceJPAConfig.class, ServicesConfig.class /**WebAppConfig.class, PersistenceJPAConfig.class, PropertyConfig.class*/})
+//@Configuration
+//@Import({PersistenceJPAConfig.class, ServicesConfig.class /**WebAppConfig.class, PersistenceJPAConfig.class, PropertyConfig.class*/})
 public class AppConfig {
 
 }

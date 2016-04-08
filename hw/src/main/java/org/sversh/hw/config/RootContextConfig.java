@@ -27,8 +27,8 @@ import org.springframework.transaction.support.TransactionTemplate;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories
-//@ComponentScan
-public class PersistenceJPAConfig implements TransactionManagementConfigurer {
+@ComponentScan("org.sversh.hw.data")
+public class RootContextConfig implements TransactionManagementConfigurer {
 
     private static final String DRIVER_CLASS_NAME = "org.hsqldb.jdbc.JDBCDriver";
     private static final String DB_URL = "jdbc:hsqldb:mem:homework";
