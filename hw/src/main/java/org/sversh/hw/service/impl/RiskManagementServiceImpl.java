@@ -5,6 +5,7 @@ import java.util.Calendar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.sversh.hw.data.model.LoanRequest;
+import org.sversh.hw.service.api.Const;
 import org.sversh.hw.service.api.EntityService;
 import org.sversh.hw.service.api.RiskManagementService;
 
@@ -17,8 +18,6 @@ import org.sversh.hw.service.api.RiskManagementService;
 @Service
 public class RiskManagementServiceImpl implements RiskManagementService {
 
-    private static final int MAX_COUNT = 3;
-    private static final Long MAX_AMOUNT = 1000000L;
     @Autowired
     private EntityService entityService;
 
@@ -27,19 +26,20 @@ public class RiskManagementServiceImpl implements RiskManagementService {
         
         boolean isBadTimeAndMax = isBadTimeAndMax(loanRequest);
         boolean isMaxCountForSingleIp = isMaxCountForSingleIp(loanRequest);
-        return !isBadTimeAndMax && !isMaxCountForSingleIp;
+        return !isBadTimeAndMax && !isMaxCountForSingleIp 
+                && (loanRequest.getAmount() <= Const.MAX_AMOUNT);
     }
 
     private boolean isMaxCountForSingleIp(LoanRequest loanRequest) {
         long count = entityService.countAllLoansForPersonAndIpForDay(loanRequest);
-        return count > MAX_COUNT;
+        return count > Const.MAX_COUNT;
     }
 
-    private boolean isBadTimeAndMax(LoanRequest lr) {
+    boolean isBadTimeAndMax(LoanRequest lr) {
         Calendar c = Calendar.getInstance();
         c.setTime(lr.getDate());
         int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
-        return (timeOfDay >= 0 && timeOfDay < 6) && lr.getAmount() >= MAX_AMOUNT;
+        return (timeOfDay >= 0 && timeOfDay < 6) && lr.getAmount() >= Const.MAX_AMOUNT;
     }
 
 }
