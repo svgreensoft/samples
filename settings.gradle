@@ -1,1 +1,1 @@
-include 'chat', 'jaxb-batch', 'wildfly-people', 'swagger-spring-ui'
+include 'chat', 'jaxb-batch', 'wildfly-people', 'swagger-spring-ui', 'algorithms'
