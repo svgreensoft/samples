@@ -1,5 +1,7 @@
 #org.springsource.ide.eclipse.gradle.core.preferences.GradleProjectPreferences
-#Sat Aug 15 00:16:00 MSK 2015
-build.family.org.gradle.tooling.model.eclipse.HierarchicalEclipseProject=;chat;jaxb-batch;wildfly-people;
+#Mon Feb 22 18:07:27 MSK 2016
+build.family.org.gradle.tooling.model.eclipse.HierarchicalEclipseProject=;algorithms;chat;jaxb-batch;swagger-spring-ui;wildfly-people;
+org.springsource.ide.eclipse.gradle.classname.enableSorting=false
+org.springsource.ide.eclipse.gradle.classpath.enableSorting=true
 org.springsource.ide.eclipse.gradle.linkedresources=
 org.springsource.ide.eclipse.gradle.rootprojectloc=
