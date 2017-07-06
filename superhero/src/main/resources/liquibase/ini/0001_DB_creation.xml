@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+	<changeSet id="000001" author="svershinin">
+		<comment>Create 'ally' table</comment>
+		<createTable tableName="ally">
+			<column name="id" type="bigint" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="name" type="varchar(255)">
+				<constraints nullable="false" unique="true"
+					uniqueConstraintName="idx_ally" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet id="000002" author="svershinin">
+		<comment>Create 'skill' table></comment>
+		<createTable tableName="skill">
+			<column name="id" type="bigint" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="name" type="varchar(255)">
+				<constraints nullable="false" unique="true"
+					uniqueConstraintName="idx_skill" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet id="000003" author="svershinin">
+		<comment>Create 'superhero' table></comment>
+		<createTable tableName="superhero">
+			<column name="id" type="bigint" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="name" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="pseudonym" type="varchar(255)">
+				<constraints nullable="false" unique="true" uniqueConstraintName="idx_pseudonym" />
+			</column>
+			<column name="publisher" type="varchar(255)">
+				<constraints nullable="false"/>
+			</column>
+
+		</createTable>
+	</changeSet>
+
+    <changeSet id="000004" author="svershinin">
+        <comment>Create 'hero_ally' table></comment>
+        <createTable tableName="hero_ally">
+            <column name="hero" type="bigint">
+                <constraints nullable="false" primaryKey="true" references="superhero(id)" foreignKeyName="fk_heroally_superhero"/>
+            </column>
+            <column name="ally" type="bigint">
+                <constraints nullable="false" primaryKey="true" references="ally(id)" foreignKeyName="fk_heroally_ally"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="000005" author="svershinin">
+        <comment>Create 'hero_skill' table></comment>
+        <createTable tableName="hero_skill">
+            <column name="hero" type="bigint">
+                <constraints nullable="false" primaryKey="true" references="superhero(id)" foreignKeyName="fk_heroskill_superhero"/>
+            </column>
+            <column name="skill" type="bigint">
+                <constraints nullable="false" primaryKey="true" references="skill(id)" foreignKeyName="fk_heroskill_skill"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
